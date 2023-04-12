@@ -6,6 +6,10 @@ profit_change = 0
 previous_profit = 0
 profit_list = []
 profit_average = 0
+greatest_increase = 0
+greatest_increase_month = ""
+greatest_decrease = 0
+greatest_decrease_month = ""
 
 with open('Resources/budget_data.csv') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
@@ -23,6 +27,13 @@ with open('Resources/budget_data.csv') as csvfile:
         if profit_change != profit:
             profit_list.append(profit_change)
         
+        if greatest_increase < profit_change:
+            greatest_increase = profit_change
+            greatest_increase_month = month
+        if greatest_decrease > profit_change:
+            greatest_decrease = profit_change
+            greatest_decrease_month = month
+        
     profit_average = "{0:.2f}".format(sum(profit_list)/len(profit_list))
 
 
@@ -33,5 +44,5 @@ with open('Resources/budget_data.csv') as csvfile:
 Total Months: {total_months}
 Total: ${total_profit}
 Average Change: ${profit_average}
-Greatest Increase in Profits: 
-Greatest Decrease in Profits:     ''')
+Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})
+Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})   ''')
